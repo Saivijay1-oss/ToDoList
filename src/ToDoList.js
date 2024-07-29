@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './ToDoList.css'; 
+import './ToDoList.css';
+
 const ToDoList = () => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
@@ -22,6 +23,13 @@ const ToDoList = () => {
     const saveTask = (index) => {
         const updatedTasks = tasks.map((task, i) =>
             i === index ? { text: editText, isEditing: false } : task
+        );
+        setTasks(updatedTasks);
+    };
+
+    const cancelEdit = (index) => {
+        const updatedTasks = tasks.map((task, i) =>
+            i === index ? { ...task, isEditing: false } : task
         );
         setTasks(updatedTasks);
     };
@@ -51,6 +59,7 @@ const ToDoList = () => {
                                     onChange={(e) => setEditText(e.target.value)}
                                 />
                                 <button className="save-button" onClick={() => saveTask(index)}>Save</button>
+                                <button className="cancel-button" onClick={() => cancelEdit(index)}>Cancel</button>
                             </>
                         ) : (
                             <span>{task.text}</span>
